@@ -1,23 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { initialTasks, initialTeam } from "./data";
 
 const PeopleForm = ({ kisiler, submitFn }) => {
+  const [team, setTeam] = useState(initialTeam);
   const [isim, setIsim] = useState("");
 
-  function handleIsimChange(e) {
-    setIsim(e.target.value);
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault();
+  const handleSubmit = (e) => {
+    setTeam([...team, isim]);
     submitFn(isim);
     setIsim("");
-  }
+    console.log("Form submit");
+    e.preventDefault();
+    
+  };
 
+  useEffect(() => {
+    setIsim("");
+  }, [kisiler]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <form className="taskForm" onSubmit={handleSubmit}>
-      <div className="form-line">
-        <label className="text-sm text-gray-600" htmlFor="title">
+    <form id="aaaa" className="taskForm" onSubmit={handleSubmit}>
+      <div>
+        <label className="text-xs text-gray-600" htmlFor="title">
           Yeni İsim Ekle
         </label>
         <input
@@ -25,7 +29,7 @@ const PeopleForm = ({ kisiler, submitFn }) => {
           id="title"
           name="title"
           type="text"
-          onChange={handleIsimChange}
+          onChange={(e) => setIsim(e.target.value)}
           value={isim}
         />
         {kisiler.includes(isim) && <p className="text-sm text-red-400">*Bu isim daha önce eklenmiş</p>}
@@ -34,9 +38,10 @@ const PeopleForm = ({ kisiler, submitFn }) => {
       <div className="pt-1 flex justify-end">
         <button
           className=" bg-blue-500  text-white py-2 px-4 rounded disabled:bg-gray-300"
-          type="submit"
+          type="button"
           disabled={isim.length === 0 || kisiler.includes(isim)}
           style={{ opacity: isim.length === 0 ? 0 : 1 }}
+          onClick={handleSubmit}
         >
           Ekle
         </button>

@@ -6,12 +6,13 @@ import { initialTasks, initialTeam } from "./data";
 import PeopleForm from "./PeopleForm";
 import { useState } from "react";
 
-export default function TaskHookForm({ kisiler, submitFn }) {
+export default function TaskHookForm({ kisiler, submitFn, submitFn2 }) {
   const {register, handleSubmit, reset, formState: { errors, isValid },} = useForm({ mode: "onChange" });
   const [team, setTeam] = useState(initialTeam);
 
   function handlePeopleSubmit(yeniKisi) {
-    setTeam([...team, yeniKisi])
+    console.log(yeniKisi);
+    submitFn2(yeniKisi);
   }
 
   function mySubmit(data) {
@@ -34,7 +35,7 @@ export default function TaskHookForm({ kisiler, submitFn }) {
   return (
     <form className="taskForm" onSubmit={handleSubmit(mySubmit)}>
       <div className="pt-2">
-        <label className="text-sm text-gray-600" htmlFor="title">
+        <label className="text-xs text-gray-600" htmlFor="title">
           Başlık
         </label>
         <input
@@ -70,7 +71,7 @@ export default function TaskHookForm({ kisiler, submitFn }) {
       </div>
 
       <div className="pt-2">
-        <label className="text-sm text-gray-600">Kişiler</label>
+        <label className="text-xs text-gray-600">Kişiler</label>
         <div>
           {kisiler.map((p) => (
             <label className="input-checkbox" key={p}>
@@ -99,7 +100,7 @@ export default function TaskHookForm({ kisiler, submitFn }) {
       </div>
 
       <div className="pt-2">
-        <label className="text-sm text-gray-600" htmlFor="deadline">
+        <label className="text-xs text-gray-600" htmlFor="deadline">
           Son teslim tarihi
         </label>
         <input

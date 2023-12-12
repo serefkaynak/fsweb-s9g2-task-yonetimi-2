@@ -15,6 +15,11 @@ function App() {
     setTasks([yeniTask, ...tasks])
   }
 
+  function handlePeopleSubmit(yeniKisi) {
+    console.log(yeniKisi);
+    setTeam([yeniKisi, ...team])
+  }
+
   function handleComplete(id) {
     const tasksCopy = [...tasks];
     const ilgiliTask = tasksCopy.filter(t => t.id === id)[0];
@@ -26,16 +31,14 @@ function App() {
 
   return (
     <div className="app flex h-screen">
-      <div className=" bg-white border-r overflow-auto basis-1/6 ">
+      <div className=" bg-white border-r overflow-auto">
         <div className="px-8 py-1 border-collapse pt-8">
-          <h2>Yeni Görev Ekle</h2>
-          <TaskHookForm kisiler={team} submitFn={handleTaskSubmit} />
+          <TaskHookForm kisiler={team} submitFn={handleTaskSubmit} submitFn2={handlePeopleSubmit} />
         </div>
       </div>
-      <div className="flex-1 justify-start flex-wrap px-1 over basis-1/6">
-        <div className="flex-1 max-w-sm min-w-min ">
-          <h2 className="text-lg">Yapılacaklar</h2>
-          <div className="">
+      <div className="flex-1 justify-start flex-wrap px-1 over">
+        <div className="flex-1">
+          <div className="px-2">
             {tasks
               .filter((t) => t.status === "yapılacak")
               .map((t) => (
@@ -44,10 +47,9 @@ function App() {
           </div>
         </div>
       </div>
-        <div className="flex-1 justify-start flex-wrap px-1 over basis-1/6">
-          <div className="flex-1 max-w-sm min-w-min ">
-            <h2 className="text-lg">Tamamlananlar</h2>
-            <div className="">
+        <div className="flex-1 justify-start flex-wrap px-1 over">
+          <div className="flex-1">
+            <div className="px-2">
               {tasks
                 .filter((t) => t.status === "yapıldı")
                 .map((t) => (
@@ -56,7 +58,6 @@ function App() {
             </div>
           </div>
         </div>
-
     </div>
   );
 }
