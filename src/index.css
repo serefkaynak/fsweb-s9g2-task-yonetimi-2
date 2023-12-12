@@ -14,7 +14,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: bisque;
+  background: rgb(201,198,198);
+  background: linear-gradient(90deg, rgba(201,198,198,1) 0%, rgba(239,239,239,0.6979385504201681) 37%, rgba(224,223,223,0.675529586834734) 100%);
 }
 
 code {

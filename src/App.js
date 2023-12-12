@@ -15,10 +15,6 @@ function App() {
     setTasks([yeniTask, ...tasks])
   }
 
-  function handlePeopleSubmit(yeniKisi) {
-    setTeam([...team, yeniKisi])
-  }
-
   function handleComplete(id) {
     const tasksCopy = [...tasks];
     const ilgiliTask = tasksCopy.filter(t => t.id === id)[0];
@@ -29,22 +25,17 @@ function App() {
   }
 
   return (
-    <div className="app">
-      <div className="formColumn">
-        <div className="form-container">
-          <h2>Yeni Task</h2>
+    <div className="app flex h-screen">
+      <div className=" bg-white border-r overflow-auto basis-1/6 ">
+        <div className="px-8 py-1 border-collapse pt-8">
+          <h2>Yeni Görev Ekle</h2>
           <TaskHookForm kisiler={team} submitFn={handleTaskSubmit} />
         </div>
-
-        <div className="form-container">
-          <h2>Yeni Kişi</h2>
-          <PeopleForm kisiler={team} submitFn={handlePeopleSubmit} />
-        </div>
       </div>
-      <div className="columns">
-        <div className="column">
-          <h2 className="column-title">Yapılacaklar</h2>
-          <div className="column-list">
+      <div className="flex-1 justify-start flex-wrap px-1 over basis-1/6">
+        <div className="flex-1 max-w-sm min-w-min ">
+          <h2 className="text-lg">Yapılacaklar</h2>
+          <div className="">
             {tasks
               .filter((t) => t.status === "yapılacak")
               .map((t) => (
@@ -52,17 +43,19 @@ function App() {
               ))}
           </div>
         </div>
-        <div className="column">
-          <h2 className="column-title">Tamamlananlar</h2>
-          <div className="column-list">
-            {tasks
-              .filter((t) => t.status === "yapıldı")
-              .map((t) => (
-                <Task key={t.id} taskObj={t} />
-              ))}
+      </div>
+        <div className="flex-1 justify-start flex-wrap px-1 over basis-1/6">
+          <div className="flex-1 max-w-sm min-w-min ">
+            <h2 className="text-lg">Tamamlananlar</h2>
+            <div className="">
+              {tasks
+                .filter((t) => t.status === "yapıldı")
+                .map((t) => (
+                  <Task key={t.id} taskObj={t} />
+                ))}
+            </div>
           </div>
         </div>
-      </div>
 
     </div>
   );

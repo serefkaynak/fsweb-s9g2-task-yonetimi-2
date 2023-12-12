@@ -2,14 +2,17 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { nanoid } from "nanoid";
 import { toast } from 'react-toastify';
+import { initialTasks, initialTeam } from "./data";
+import PeopleForm from "./PeopleForm";
+import { useState } from "react";
 
 export default function TaskHookForm({ kisiler, submitFn }) {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors, isValid },
-  } = useForm({ mode: "onChange" });
+  const {register, handleSubmit, reset, formState: { errors, isValid },} = useForm({ mode: "onChange" });
+  const [team, setTeam] = useState(initialTeam);
+
+  function handlePeopleSubmit(yeniKisi) {
+    setTeam([...team, yeniKisi])
+  }
 
   function mySubmit(data) {
     submitFn({
@@ -17,7 +20,9 @@ export default function TaskHookForm({ kisiler, submitFn }) {
       id: nanoid(5),
       status: "yapılacak",
     });
-    toast.success(data.title + " başarıyla eklendi");
+    toast.success(data.title + " başarıyla eklendi", {
+      position: "bottom-left",
+    });
     reset({
       title: "",
       description: "",
@@ -28,8 +33,8 @@ export default function TaskHookForm({ kisiler, submitFn }) {
 
   return (
     <form className="taskForm" onSubmit={handleSubmit(mySubmit)}>
-      <div className="form-line">
-        <label className="input-label" htmlFor="title">
+      <div className="pt-2">
+        <label className="text-sm text-gray-600" htmlFor="title">
           Başlık
         </label>
         <input
@@ -39,11 +44,11 @@ export default function TaskHookForm({ kisiler, submitFn }) {
           name="title"
           type="text"
         />
-        {errors.title && <p className="input-error">{errors.title.message}</p>}
+        {errors.title && <p className="text-sm text-red-400">{`*${errors.title.message}`}</p>}
       </div>
 
-      <div className="form-line">
-        <label className="input-label" htmlFor="description">
+      <div className="pt-2">
+        <label className="text-xs text-gray-600" htmlFor="description">
           Açıklama
         </label>
         <textarea
@@ -60,12 +65,12 @@ export default function TaskHookForm({ kisiler, submitFn }) {
           name="description"
         ></textarea>
         {errors.description && (
-          <p className="input-error">{errors.description.message}</p>
+          <p className="text-sm text-red-400">{`*${errors.description.message}`}</p>
         )}
       </div>
 
-      <div className="form-line">
-        <label className="input-label">İnsanlar</label>
+      <div className="pt-2">
+        <label className="text-sm text-gray-600">Kişiler</label>
         <div>
           {kisiler.map((p) => (
             <label className="input-checkbox" key={p}>
@@ -74,7 +79,7 @@ export default function TaskHookForm({ kisiler, submitFn }) {
                   required: "Lütfen en az 1 kişi seçin",
                   validate: {
                     maxKisi: (value) =>
-                      value.length < 3 || "En fazla 3 kişi seçebilirsiniz",
+                      value.length < 4 || "En fazla 3 kişi seçebilirsiniz",
                   },
                 })}
                 type="checkbox"
@@ -86,13 +91,16 @@ export default function TaskHookForm({ kisiler, submitFn }) {
           ))}
         </div>
         {errors.people && (
-          <p className="input-error">{errors.people.message}</p>
+          <p className="text-sm text-red-400">{`*${errors.people.message}`}</p>
         )}
+        <div className="border-collapse">
+          <PeopleForm kisiler={team} submitFn={handlePeopleSubmit} />
+        </div>
       </div>
 
-      <div className="form-line">
-        <label className="input-label" htmlFor="deadline">
-          Son teslim
+      <div className="pt-2">
+        <label className="text-sm text-gray-600" htmlFor="deadline">
+          Son teslim tarihi
         </label>
         <input
           className="input-text"
@@ -102,11 +110,11 @@ export default function TaskHookForm({ kisiler, submitFn }) {
           type="date"
           min="2023-01-25"
         />
-        {errors.deadline && <p className="input-error">{errors.deadline.message}</p>}
+        {errors.deadline && <p className="text-sm text-red-400">{`*${errors.deadline.message}`}</p>}
       </div>
 
-      <div className="form-line">
-        <button className="submit-button" type="submit" disabled={!isValid}>
+      <div className="py-4 flex justify-end ">
+        <button className=" bg-blue-500  text-white py-2 px-4 rounded disabled:bg-gray-300" disabled={!isValid}>
           Kaydet
         </button>
       </div>
