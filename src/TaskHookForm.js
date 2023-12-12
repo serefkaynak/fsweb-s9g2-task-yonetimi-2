@@ -33,8 +33,8 @@ export default function TaskHookForm({ kisiler, submitFn, submitFn2 }) {
 
 
   return (
-    <form className="taskForm" onSubmit={handleSubmit(mySubmit)}>
-      <div className="pt-2">
+    <form onSubmit={handleSubmit(mySubmit)}>
+      <div className="pt-2 ">
         <label className="text-xs text-gray-600" htmlFor="title">
           Başlık
         </label>
@@ -72,11 +72,10 @@ export default function TaskHookForm({ kisiler, submitFn, submitFn2 }) {
 
       <div className="pt-2">
         <label className="text-xs text-gray-600">Kişiler</label>
-        <div>
+        <div className="flex flex-wrap">
           {kisiler.map((p) => (
             <label className="input-checkbox" key={p}>
-              <input
-                {...register("people", {
+              <input {...register("people", {
                   required: "Lütfen en az 1 kişi seçin",
                   validate: {
                     maxKisi: (value) =>

@@ -30,13 +30,13 @@ function App() {
   }
 
   return (
-    <div className="app flex h-screen">
-      <div className=" bg-white border-r overflow-auto">
-        <div className="px-8 py-1 border-collapse pt-8">
+    <div className="app h-screen grid grid-cols-6">
+      <div className=" bg-white border-r overflow-auto col-span-1">
+        <div className="px-8 py-1 border-collapse pt-8 ">
           <TaskHookForm kisiler={team} submitFn={handleTaskSubmit} submitFn2={handlePeopleSubmit} />
         </div>
       </div>
-      <div className="flex-1 justify-start flex-wrap px-1 over">
+      <div className="flex-1 justify-start flex-wrap px-1 over col-span-1">
         <div className="flex-1">
           <div className="px-2">
             {tasks
@@ -47,7 +47,7 @@ function App() {
           </div>
         </div>
       </div>
-        <div className="flex-1 justify-start flex-wrap px-1 over">
+        <div className="flex-1 justify-start flex-wrap px-1 over col-span-1">
           <div className="flex-1">
             <div className="px-2">
               {tasks

@@ -19,7 +19,7 @@ const PeopleForm = ({ kisiler, submitFn }) => {
   }, [kisiler]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <form id="aaaa" className="taskForm" onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <div>
         <label className="text-xs text-gray-600" htmlFor="title">
           Yeni İsim Ekle
