@@ -87,7 +87,7 @@ export default function TaskHookForm({ kisiler, submitFn, submitFn2 }) {
                 value={p}
               />
               <span className="input-checkbox-checkmark">
-                a{p}
+                {" "}{p}
               </span>
             </label>
           ))}
